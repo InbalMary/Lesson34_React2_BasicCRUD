@@ -26,6 +26,10 @@ export function BookFilter({ defaultFilter, onSetFilter }) {
                 break
         }
         if (field === 'amount' || field === 'isOnSale') {
+            if (field === 'isOnSale') {
+                if (value === 'all') value = null
+                else value = (value === 'true')
+            }
             setFilterByToEdit(prevFilter => ({
                 ...prevFilter,
                 listPrice: {
@@ -85,13 +89,16 @@ export function BookFilter({ defaultFilter, onSetFilter }) {
                     type="number"
                 />
                 <label htmlFor="isOnSale">On Sale</label>
-                <input
+                <select
                     onChange={handleChange}
-                    checked={isOnSale || false}
+                    value={isOnSale === null ? 'all' : isOnSale ? 'true' : 'false'}
                     name="isOnSale"
                     id="isOnSale"
-                    type="checkbox"
-                />
+                >
+                    <option value="all">All</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
             </form>
         </section>
     )

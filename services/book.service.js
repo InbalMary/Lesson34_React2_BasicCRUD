@@ -18,10 +18,41 @@ function query(filterBy = {}) {
         .then(books => {
             if (filterBy.title) {
                 const regExp = new RegExp(filterBy.title, 'i')
-                books = books.filter(book => regExp.test(book.vendor))
+                books = books.filter(book => regExp.test(book.title))
             }
-            if (filterBy.amount) {
-                books = books.filter(book => book.listPrice.amount >= filterBy.amount)
+            if (filterBy.subtitle) {
+                const regExp = new RegExp(filterBy.subtitle, 'i')
+                books = books.filter(book => regExp.test(book.subtitle))
+            }
+            if (filterBy.authors && typeof filterBy.authors === 'string' && filterBy.authors.trim() !== '') {
+                const authorToFilter = filterBy.authors.toLowerCase()
+                books = books.filter(book =>
+                    book.authors.some(author => author.toLowerCase().includes(authorToFilter))
+                )
+            }
+            if (filterBy.publishedDate) {
+                books = books.filter(book => book.publishedDate === filterBy.publishedDate)
+            }
+            if (filterBy.description) {
+                const regExp = new RegExp(filterBy.description, 'i')
+                books = books.filter(book => regExp.test(book.description))
+            }
+            if (filterBy.pageCount) {
+                books = books.filter(book => book.pageCount >= filterBy.pageCount)
+            }
+            if (filterBy.categories && filterBy.categories.length > 0) {
+                books = books.filter(book =>
+                    book.categories.some(category => filterBy.categories.includes(category))
+                )
+            }
+            if (filterBy.language) {
+                books = books.filter(book => book.language === filterBy.language)
+            }
+            if (filterBy.listPrice && filterBy.listPrice.amount) {
+                books = books.filter(book => book.listPrice.amount <= filterBy.listPrice.amount)
+            }
+            if (filterBy.listPrice && filterBy.listPrice.isOnSale !== undefined) {
+                books = books.filter(book => book.listPrice.isOnSale === filterBy.listPrice.isOnSale)
             }
             return books
         })
@@ -56,23 +87,58 @@ function getEmptyBook(title = '', amount = 0) {
 }
 
 function getDefaultFilter() {
-    return { title: '', listPrice: '' }
+    return {
+        title: '',
+        subtitle: '',
+        authors: [],
+        publishedDate: null,
+        description: '',
+        pageCount: 0,
+        categories: [],
+        thumbnail: '',
+        language: '',
+        listPrice: {
+            amount: 0,
+            currencyCode: '',
+            isOnSale: false
+        }
+    }
 }
 
 function _createBooks() {
     let books = loadFromStorage(BOOK_KEY)
     if (!books || !books.length) {
-        books = [
-            _createBook('Gwent', 100),
-            _createBook('Between here and gone', 120),
-            _createBook('Magic lantern', 150),
-        ]
+        const ctgs = ['Love', 'Fiction', 'Poetry', 'Computers', 'Religion']
+        const books = []
+        for (let i = 0; i < 20; i++) {
+            const book = {
+                id: utilService.makeId(),
+                title: utilService.makeLorem(2),
+                subtitle: utilService.makeLorem(4),
+                authors: [
+                    utilService.makeLorem(1)
+                ],
+                publishedDate: utilService.getRandomIntInclusive(1950, 2024),
+                description: utilService.makeLorem(20),
+                pageCount: utilService.getRandomIntInclusive(20, 600),
+                categories: [ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)]],
+                thumbnail: `http://coding-academy.org/books-photos/${i + 1}.jpg`,
+                language: "en",
+                listPrice: {
+                    amount: utilService.getRandomIntInclusive(80, 500),
+                    currencyCode: "EUR",
+                    isOnSale: Math.random() > 0.7
+                }
+            }
+            books.push(book)
+        }
+        console.log('books', books)
         saveToStorage(BOOK_KEY, books)
     }
 }
 
-function _createBook(title, amount= 109) {
-    const book = getEmptyBook(title, amount)
-    book.id = makeId()
-    return book
-}
+// function _createBook(title, amount = 109) {
+//     const book = getEmptyBook(title, amount)
+//     book.id = makeId()
+//     return book
+// }

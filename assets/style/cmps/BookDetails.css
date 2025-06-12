@@ -1,0 +1,29 @@
+.book-details {
+    position: relative;
+    text-align: center;
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.book-details > * {
+    margin-inline: 1em;
+}
+
+.book-details h1 {
+    font-size: 2em;
+}
+.on-sale-badge {
+    position: absolute;
+    top: 1em;
+    right: 6em;
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1em;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}

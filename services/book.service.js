@@ -51,7 +51,7 @@ function query(filterBy = {}) {
             if (filterBy.listPrice && filterBy.listPrice.amount) {
                 books = books.filter(book => book.listPrice.amount <= filterBy.listPrice.amount)
             }
-            if (filterBy.listPrice && filterBy.listPrice.isOnSale !== undefined) {
+            if (filterBy.listPrice && filterBy.listPrice.isOnSale !== null) {
                 books = books.filter(book => book.listPrice.isOnSale === filterBy.listPrice.isOnSale)
             }
             return books
@@ -100,7 +100,7 @@ function getDefaultFilter() {
         listPrice: {
             amount: 0,
             currencyCode: '',
-            isOnSale: false
+            isOnSale: null
         }
     }
 }

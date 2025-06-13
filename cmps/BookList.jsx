@@ -1,4 +1,4 @@
-import { BookPreview } from "./BookPreview.jsx";
+import { BookPreview } from "../cmps/BookPreview.jsx";
 
 export function BookList({ books, onSelectBookId }) {
 

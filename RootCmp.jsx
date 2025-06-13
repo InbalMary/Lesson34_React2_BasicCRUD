@@ -10,9 +10,12 @@ export function RootCmp() {
     const [page, setPage] = useState('books')
     // console.log('Current page:', page)
 
+    function onSetPage(page) {
+        setPage(page)
+    }
     return (
         <section className="app">
-            <AppHeader onSetPage={(page) => setPage(page)} />
+            <AppHeader onSetPage={onSetPage} />
 
             <main>
                 {page === 'home' && <Home />}

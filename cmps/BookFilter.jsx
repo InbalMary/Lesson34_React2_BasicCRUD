@@ -53,7 +53,7 @@ export function BookFilter({ defaultFilter, onSetFilter }) {
                 <label htmlFor="title">Title</label>
                 <input
                     onChange={handleChange}
-                    value={title || ''}
+                    value={title}
                     name="title"
                     id="title"
                     type="text"
@@ -61,7 +61,7 @@ export function BookFilter({ defaultFilter, onSetFilter }) {
                 <label htmlFor="authors">Authors</label>
                 <input
                     onChange={handleChange}
-                    value={authors || ''}
+                    value={authors}
                     name="authors"
                     id="authors"
                     type="text"
@@ -80,7 +80,7 @@ export function BookFilter({ defaultFilter, onSetFilter }) {
                     <option value="Computers">Computers</option>
                     <option value="Religion">Religion</option>
                 </select>
-                <label htmlFor="amount">Price Amount</label>
+                <label htmlFor="amount">Max Price</label>
                 <input
                     onChange={handleChange}
                     value={amount || ''}
@@ -89,16 +89,38 @@ export function BookFilter({ defaultFilter, onSetFilter }) {
                     type="number"
                 />
                 <label htmlFor="isOnSale">On Sale</label>
-                <select
-                    onChange={handleChange}
-                    value={isOnSale === null ? 'all' : isOnSale ? 'true' : 'false'}
-                    name="isOnSale"
-                    id="isOnSale"
-                >
-                    <option value="all">All</option>
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                </select>
+                <div id="isOnSale">
+                    <label>
+                        <input
+                            type="radio"
+                            name="isOnSale"
+                            value="all"
+                            checked={isOnSale === null}
+                            onChange={handleChange}
+                        />
+                        All
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="isOnSale"
+                            value="true"
+                            checked={isOnSale === true}
+                            onChange={handleChange}
+                        />
+                        Yes
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="isOnSale"
+                            value="false"
+                            checked={isOnSale === false}
+                            onChange={handleChange}
+                        />
+                        No
+                    </label>
+                </div>
             </form>
         </section>
     )

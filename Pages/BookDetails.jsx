@@ -61,7 +61,7 @@ export function BookDetails({ bookId, onBack }) {
             <p className={`book-price ${amountClass}`}>Price: {amount} {currencyCode}</p>
             <p className="book-on-sale">On Sale: {isOnSale ? 'Yes' : 'No'}</p>
             {isOnSale ? <span className="on-sale-badge">On Sale</span> : ''}
-            <button onClick={onBack}>Back</button>
+            {/* <button onClick={onBack}>Back</button> */}
         </section>
     )
 }

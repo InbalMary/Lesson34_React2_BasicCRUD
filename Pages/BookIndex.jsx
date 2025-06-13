@@ -1,7 +1,7 @@
 import { BookFilter } from "../cmps/BookFilter.jsx"
 import { BookList } from "../cmps/BookList.jsx"
 import { bookService } from "../services/book.service.js"
-import { BookDetails } from "../Pages/BookDetails.jsx"
+import { BookDetails } from "./BookDetails.jsx"
 
 const { useState, useEffect, useRef } = React
 

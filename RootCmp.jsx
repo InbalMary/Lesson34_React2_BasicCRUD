@@ -1,9 +1,9 @@
 const { useState } = React
 
 import { AppHeader } from "./cmps/AppHeader.jsx"
-import { About } from "./pages/About.jsx"
-import { Home } from "./pages/Home.jsx"
-import { BookIndex } from "./pages/BookIndex.jsx"
+import { About } from "./Pages/About.jsx"
+import { Home } from "./Pages/Home.jsx"
+import { BookIndex } from "./Pages/BookIndex.jsx"
 
 export function RootCmp() {
 
@@ -23,5 +23,5 @@ export function RootCmp() {
                 {page === 'books' && <BookIndex />}
             </main>
         </section>
-    )
+    )  
 } 

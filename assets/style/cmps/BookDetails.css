@@ -7,13 +7,14 @@
     align-items: center;
 }
 
-.book-details > * {
+.book-details>* {
     margin-inline: 1em;
 }
 
 .book-details h1 {
     font-size: 2em;
 }
+
 .on-sale-badge {
     position: absolute;
     top: 1em;
@@ -26,4 +27,18 @@
     font-size: 1em;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     z-index: 10;
+}
+
+.book-price {
+    &.red {
+        color: red
+    }
+
+    &.green {
+        color: green
+    }
+}
+
+dialog {
+    width: 60%;
 }

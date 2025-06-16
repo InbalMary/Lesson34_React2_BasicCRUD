@@ -51,14 +51,24 @@ export function BookDetails({ bookId, onBack }) {
             <img src={thumbnail} alt={title} />
             <h1 className="book-title">{title}</h1>
             <h2 className="book-subtitle">{subtitle}</h2>
-            <p className="book-authors">Authors: {authors.join(', ')}</p>
+            <section className="book-authors">
+                <h4>Authors</h4>
+                <ul>
+                    {authors.map(author => <li key={author}>{author}</li>)}
+                </ul>
+            </section>
             <p className="book-published-date">Published Date: {publishedDate} - {dateCategory}</p>
             <LongTxt txt={description} length={20} />
-            {/* <p className="book-description">Description: {description}</p> */}
             <p className="book-page-count">Page Count: {pageCount} - {pageCountInfo}</p>
-            <p className="book-categories">Categories: {categories.join(', ')}</p>
+            <section className="book-categories">
+                <h4>Categories</h4>
+                <ul>
+                    {categories.map(cat => <li key={cat}>{cat}</li>)}
+                </ul>
+            </section>
             <p className="book-language">Language: {language}</p>
-            <p className={`book-price ${amountClass}`}>Price: {amount} {currencyCode}</p>
+            <p>Price: <span className={`book-price ${amountClass}`}>{amount}</span></p>
+            {/* <p className={`book-price ${amountClass}`}>Price: {amount} {currencyCode}</p> */}
             <p className="book-on-sale">On Sale: {isOnSale ? 'Yes' : 'No'}</p>
             {isOnSale ? <span className="on-sale-badge">On Sale</span> : ''}
             {/* <button onClick={onBack}>Back</button> */}

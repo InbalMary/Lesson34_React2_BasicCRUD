@@ -94,7 +94,6 @@ export function BookIndex() {
                     <BookEdit bookId={selectedBookId}
                         onUpdateBook={onUpdateBook} onCanceled={() =>onCloseDialog(dialogEditRef)}
                         />
-                        <button onClick={() =>onCloseDialog(dialogEditRef)}>Close</button>
                         </dialog>
                 }
             </section>}

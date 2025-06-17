@@ -13,10 +13,11 @@ export function LongTxt({ txt, length = 100 }) {
     const isBtnShow = txt.length > length
     return (
         <section className="long-txt container">
-            <p>Description: {descriptionTxt}</p>
-            {isBtnShow && <button onClick={toggleIsReadMore}>
-                {isLong ? 'Read Less' : 'Read More..'}
-            </button>}
+            <h4>Description:</h4>
+            <p>{descriptionTxt}</p>
+            {isBtnShow && <span className="toggleBtn" onClick={toggleIsReadMore}>
+                {isLong ? '...Read Less' : 'Read More..'}
+            </span>}
         </section>
     )
 }

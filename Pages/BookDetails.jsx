@@ -57,21 +57,34 @@ export function BookDetails({ bookId, onBack }) {
                     {authors.map(author => <li key={author}>{author}</li>)}
                 </ul>
             </section>
-            <p className="book-published-date">Published Date: {publishedDate} - {dateCategory}</p>
+            <section className="book-published-date">
+                <h4>Published Date:</h4>
+                <p>{publishedDate} - {dateCategory}</p>
+            </section>
             <LongTxt txt={description} length={20} />
-            <p className="book-page-count">Page Count: {pageCount} - {pageCountInfo}</p>
+            <section className="book-page-count">
+                <h4>Page Count:</h4>
+                <p>{pageCount} - {pageCountInfo}</p>
+            </section>
             <section className="book-categories">
                 <h4>Categories</h4>
                 <ul>
                     {categories.map(cat => <li key={cat}>{cat}</li>)}
                 </ul>
             </section>
-            <p className="book-language">Language: {language}</p>
-            <p>Price: <span className={`book-price ${amountClass}`}>{amount}</span></p>
-            {/* <p className={`book-price ${amountClass}`}>Price: {amount} {currencyCode}</p> */}
-            <p className="book-on-sale">On Sale: {isOnSale ? 'Yes' : 'No'}</p>
+            <section className="book-language">
+                <h4>Language:</h4>
+                <p>{language}</p>
+            </section>
+            <section>
+                <h4>Price:</h4>
+                <p><span className={`book-price ${amountClass}`}>{amount}</span></p>
+            </section>
+            <section className="book-on-sale">
+                <h4>On Sale:</h4>
+                <p>{isOnSale ? 'Yes' : 'No'}</p>
+            </section>
             {isOnSale ? <span className="on-sale-badge">On Sale</span> : ''}
-            {/* <button onClick={onBack}>Back</button> */}
         </section>
     )
 }

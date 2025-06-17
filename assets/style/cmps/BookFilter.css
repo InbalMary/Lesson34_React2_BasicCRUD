@@ -18,3 +18,7 @@
 .book-filter form button {
     margin-inline: 0
 }
+
+select {
+    font-family: inherit;
+}

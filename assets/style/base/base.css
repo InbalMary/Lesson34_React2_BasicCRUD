@@ -7,6 +7,8 @@ body {
     margin: 0;
     color: var(--gray3);
     font-size: 1.2rem;
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--clr2bg-dark);
 }
 
 h1,
@@ -16,7 +18,7 @@ h4,
 h5,
 h6 {
     margin: .5em 0 .5em;
-    font-family: 'Edu VIC WA NT Beginner', cursive;
+    font-family: 'Montserrat', sans-serif;
 }
 
 p {
@@ -41,4 +43,8 @@ object {
 /* Simple and useful CSS Debugging Technique */
 .debug * {
     outline: 1px solid gold
+}
+
+button {
+    font-family: 'Montserrat', sans-serif;
 }

@@ -112,9 +112,10 @@ export function BookEdit({ bookId, onUpdateBook, onCanceled }) {
                     id="amount"
                     type="number"
                 />
-
-                <button type="submit">Save</button>
-                <button type="button" onClick={onCanceled}>Cancel</button>
+                <div>
+                    <button type="submit">Save</button>
+                    <button type="button" onClick={onCanceled}>Cancel</button>
+                </div>
             </form>
         </section>
     )

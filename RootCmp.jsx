@@ -15,7 +15,7 @@ export function RootCmp() {
     }
     return (
         <section className="app">
-            <AppHeader onSetPage={onSetPage} />
+            <AppHeader onSetPage={onSetPage} currentPage={page}/>
 
             <main>
                 {page === 'home' && <Home />}

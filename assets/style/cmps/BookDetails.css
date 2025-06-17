@@ -5,6 +5,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: var(--clr1bg);
+    border-radius: 12px;
+    margin: auto;
 }
 
 .book-details>* {
@@ -41,4 +44,18 @@
 
 dialog {
     width: 60%;
+}
+
+.book-details section {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 0.75em;
+}
+
+.book-details h4,
+.book-details p,
+.book-details ul {
+  margin: 0;
+  line-height: 1.2;
 }

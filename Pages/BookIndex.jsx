@@ -4,7 +4,7 @@ import { bookService } from "../services/book.service.js"
 import { BookDetails } from "./BookDetails.jsx"
 import { BookEdit } from "../cmps/BookEdit.jsx"
 
-const { useState, useEffect, useRef } = React
+const { useState, useEffect, Fragment, useRef } = React
 
 export function BookIndex() {
 
@@ -22,14 +22,7 @@ export function BookIndex() {
 
     useEffect(() => {
         if (!selectedBookId) return
-        dialogRef.current.showModal()
     }, [selectedBookId])
-    
-    useEffect(() => {
-        if (isEditMode && selectedBookId) {
-            dialogEditRef.current.showModal()
-        }
-    }, [isEditMode])
 
     function loadBooks() {
         bookService.query(filterBy)
@@ -54,49 +47,54 @@ export function BookIndex() {
 
     function onUpdateBook(selectedBookId) {
         bookService.get(selectedBookId)
-        .then(updatedBook => {
-            setBooks(prevBooks =>
-                prevBooks.map(book =>
-                    book.id === updatedBook.id ? updatedBook : book
+            .then(updatedBook => {
+                setBooks(prevBooks =>
+                    prevBooks.map(book =>
+                        book.id === updatedBook.id ? updatedBook : book
+                    )
                 )
-            )
-            setSelectedBookId(null)
-            setIsEditMode(false)
-        })
+                setSelectedBookId(null)
+                setIsEditMode(false)
+            })
     }
 
     if (!books) return <div>Loading...</div>
 
     return (
         <section className="book-index">
-            <BookFilter
-                defaultFilter={filterBy}
-                onSetFilter={onSetFilter}
-            />
-            <BookList
-                books={books}
-                onSelectBookId={onSelectBookId}
-            />
-            {selectedBookId && <section>
-                {
-                    !isEditMode && <dialog ref={dialogRef} >
-                    <BookDetails
-                        bookId={selectedBookId}
-                    // onBack={() => setSelectedBookId(null)}
+            {!selectedBookId &&
+                <Fragment>
+                    <BookFilter
+                        defaultFilter={filterBy}
+                        onSetFilter={onSetFilter}
                     />
-                    <button onClick={() => onCloseDialog(dialogRef)}>Close</button>
-                    <button onClick={() => {
-                        setIsEditMode(true)
-                        dialogRef.current.close()}}>Edit</button>
-                </dialog>}
-                {
-                    isEditMode && <dialog ref={dialogEditRef} >
-                    <BookEdit bookId={selectedBookId}
-                        onUpdateBook={onUpdateBook} onCanceled={() =>onCloseDialog(dialogEditRef)}
-                        />
-                        </dialog>
-                }
-            </section>}
+                    <BookList
+                        books={books}
+                        onSelectBookId={onSelectBookId}
+                    />
+                </Fragment>
+            }
+            {selectedBookId && (
+                <Fragment>
+                    {!isEditMode && (
+                        <Fragment>
+                            <BookDetails bookId={selectedBookId} />
+                            <button onClick={() => setSelectedBookId(null)}>Close</button>
+                            <button onClick={() => setIsEditMode(true)}>Edit</button>
+                        </Fragment>
+                    )}
+
+                    {isEditMode && (
+                        <Fragment>
+                            <BookEdit
+                                bookId={selectedBookId}
+                                onUpdateBook={onUpdateBook}
+                                onCanceled={() => setIsEditMode(false)}
+                            />
+                        </Fragment>
+                    )}
+                </Fragment>
+            )}
         </section>
     )
 

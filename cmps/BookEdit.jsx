@@ -78,8 +78,8 @@ export function BookEdit() {
         }
 
         bookService.save(fullBook)
-            .then(() => {
-                showSuccessMsg(`Book Saved (id: ${fullBook.id})`)
+            .then((savedBook) => {
+                showSuccessMsg(`Book Saved (id: ${savedBook.id})`)
                 navigate('/book')})
             .catch(err => {
                 console.log('Cannot save book:', err)

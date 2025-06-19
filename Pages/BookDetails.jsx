@@ -8,6 +8,7 @@ export function BookDetails() {
 
     const [book, setBook] = useState(null)
     const params = useParams()
+    const navigate = useNavigate()
 
     useEffect(() => {
         loadBook()

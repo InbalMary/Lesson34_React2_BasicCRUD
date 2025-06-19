@@ -78,11 +78,20 @@ function save(book) {
 
 function getEmptyBook(title = '', amount = 0) {
     return {
+        id: '',
         title,
+        subtitle: utilService.makeLorem(4),
+        authors: [],
+        publishedDate: utilService.getRandomIntInclusive(1950, 2024),
+        description: utilService.makeLorem(20),
+        pageCount: utilService.getRandomIntInclusive(20, 600),
+        categories: [],
+        thumbnail: 'https://covers.openlibrary.org/b/id/10523325-L.jpg',
+        language: 'en',
         listPrice: {
             amount,
             currencyCode: 'EUR',
-            isOnSale: false
+            isOnSale: Math.random() > 0.7
         }
     }
 }

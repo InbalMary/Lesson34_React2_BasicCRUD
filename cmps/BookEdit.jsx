@@ -1,20 +1,34 @@
 import { bookService } from "../services/book.service.js"
-const { useState, useEffect } = React
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
-export function BookEdit({ bookId, onUpdateBook, onCanceled }) {
-    const [bookToEdit, setBookToEdit] = useState(null)
+const { useState, useEffect } = React
+const { useNavigate, useParams } = ReactRouterDOM
+
+export function BookEdit() {
+    const [bookToEdit, setBookToEdit] = useState(bookService.getEmptyBook())
+    const navigate = useNavigate()
+    const { bookId } = useParams()
 
     useEffect(() => {
-        if (!bookId) {
-            setBookToEdit(bookService.getEmptyBook())
-        } else {
-            bookService.get(bookId)
-                .then(book => setBookToEdit({ ...book }))
-                .catch(err => {
-                    console.error('Failed to load book:', err)
-                })
-        }
-    }, [bookId])
+        if (bookId) loadBook()
+    }, [])
+
+    function loadBook() {
+        bookService.get(bookId)
+            .then(book => {
+                const emptyBook = bookService.getEmptyBook()
+                const fullBook = { ...emptyBook, ...book }
+
+                fullBook.listPrice = {
+                    ...emptyBook.listPrice,
+                    ...book.listPrice
+                }
+                setBookToEdit(fullBook)
+            })
+            .catch(err => {
+                console.error('Failed to load book:', err)
+            })
+    }
 
     function handleChange({ target }) {
         const field = target.name
@@ -52,12 +66,24 @@ export function BookEdit({ bookId, onUpdateBook, onCanceled }) {
 
     function onSaveBook(ev) {
         ev.preventDefault()
-        bookService.save(bookToEdit)
-            .then(savedBook => {
-                if (onUpdateBook) onUpdateBook(savedBook.id)
-            })
+        const emptyBook = bookService.getEmptyBook()
+
+        const fullBook = {
+            ...emptyBook,
+            ...bookToEdit,
+            listPrice: {
+                ...emptyBook.listPrice,
+                ...bookToEdit.listPrice
+            }
+        }
+
+        bookService.save(fullBook)
+            .then(() => {
+                showSuccessMsg(`Book Saved (id: ${fullBook.id})`)
+                navigate('/book')})
             .catch(err => {
-                console.error('Cannot save book:', err)
+                console.log('Cannot save book:', err)
+                showErrorMsg('Cannot save book')
             })
     }
 
@@ -68,7 +94,7 @@ export function BookEdit({ bookId, onUpdateBook, onCanceled }) {
 
     return (
         <section className="book-edit container">
-            <h2>Edit Book</h2>
+            <h1>{bookId ? 'Edit' : 'Add'} Book</h1>
 
             <form onSubmit={onSaveBook}>
                 <label htmlFor="title">Title</label>
@@ -114,7 +140,7 @@ export function BookEdit({ bookId, onUpdateBook, onCanceled }) {
                 />
                 <div>
                     <button type="submit">Save</button>
-                    <button type="button" onClick={onCanceled}>Cancel</button>
+                    {/* <button type="button" onClick={onCanceled}>Cancel</button> */}
                 </div>
             </form>
         </section>

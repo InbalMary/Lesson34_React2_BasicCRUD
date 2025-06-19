@@ -18,10 +18,11 @@
 
     >a {
         cursor: pointer;
-        text-transform: capitalize
+        transition: scale 0.2s;
     }
-}
 
-.active {
-    font-weight: bold;
+    >a.active {
+        text-decoration: underline;
+        scale: 1.2;
+    }
 }

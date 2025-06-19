@@ -1,9 +1,15 @@
 const { useState } = React
 
 import { AppHeader } from "./cmps/AppHeader.jsx"
+import { NotFound } from "./cmps/NotFound.jsx"
 import { About } from "./Pages/About.jsx"
 import { Home } from "./Pages/Home.jsx"
 import { BookIndex } from "./Pages/BookIndex.jsx"
+import { BookDetails } from "./Pages/BookDetails.jsx"
+import { BookEdit } from "./cmps/BookEdit.jsx"
+
+const Router = ReactRouterDOM.HashRouter
+const { Routes, Route, Navigate } = ReactRouterDOM
 
 export function RootCmp() {
 
@@ -14,14 +20,26 @@ export function RootCmp() {
         setPage(page)
     }
     return (
-        <section className="app">
-            <AppHeader onSetPage={onSetPage} currentPage={page}/>
+        <Router>
+            <section className="app">
+                <AppHeader onSetPage={onSetPage} currentPage={page} />
 
-            <main>
-                {page === 'home' && <Home />}
-                {page === 'about' && <About />}
-                {page === 'books' && <BookIndex />}
-            </main>
-        </section>
-    )  
+                <main>
+                    <Routes>
+                        <Route path="/" element={<Navigate to="/home" />} />
+                        <Route path="/home" element={<Home />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="/book" element={<BookIndex />} />
+
+                        <Route path="/book/:bookId" element={<BookDetails />} />
+                        <Route path="/book/edit" element={<BookEdit />} />
+                        <Route path="/book/edit/:bookId" element={<BookEdit />} />
+
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+
+                </main>
+            </section>
+        </Router>
+    )
 } 

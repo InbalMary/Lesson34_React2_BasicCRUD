@@ -51,6 +51,9 @@ export function BookIndex() {
             <section className="container">
                 <Link to="/book/edit">Add</Link>
             </section>
+            <section className="container">
+                <Link to="/book/add">Add Google Book</Link>
+            </section>
             <BookList
                 books={books}
                 onRemoveBook={onRemoveBook}

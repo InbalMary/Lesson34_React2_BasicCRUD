@@ -9,8 +9,11 @@ const { useState, useEffect } = React
 export function BookDetails() {
 
     const [book, setBook] = useState(null)
+    const [reviews, setReviews] = useState(null)
     const params = useParams()
     const navigate = useNavigate()
+    // TODO: reviews inside state
+
     const [isAddingReview, setIsAddingReview] = useState(false)
 
     useEffect(() => {
@@ -19,11 +22,19 @@ export function BookDetails() {
 
     function loadBook() {
         bookService.get(params.bookId)
-            .then(setBook)
+            .then(book => {
+                setBook(book)
+                setReviews(book.reviews || [])
+            })
             .catch(err => {
                 console.log('err:', err)
             })
     }
+
+    useEffect(() => {
+
+    }, [reviews])
+
 
     function getPageCountInfo(pageCount) {
         if (pageCount > 500) return 'Serious Reading'
@@ -33,7 +44,6 @@ export function BookDetails() {
 
     function getDateCategory(publishedDate) {
         const curYear = (new Date()).getFullYear()
-        // console.log('curyear, publishedDate', curYear, publishedDate)
         if (curYear - publishedDate > 10) return 'Vintage'
         return 'New'
     }
@@ -52,21 +62,27 @@ export function BookDetails() {
         setIsAddingReview(prev => !prev)
     }
 
-    function onRemoveReview(revId){
+    function onRemoveReview(revId) {
         bookService.removeReview(book.id, revId)
-        .then(() => {
-            showSuccessMsg('Review removed succssefuly')
-            loadBook()
-    })
-        .catch(err => {
-            console.error('Failed to remove review:', err)
-            showErrorMsg('Failed to remove review')
-        })
+            .then(() => {
+                showSuccessMsg('Review removed succssefuly')
+                // loadBook() // TODO: update reviews (setReviews)
+                setReviews(prevReviews => prevReviews.filter(rev => rev.id !== revId))
+            })
+            .catch(err => {
+                console.error('Failed to remove review:', err)
+                showErrorMsg('Failed to remove review')
+            })
+    }
+
+    function onAddReview(newReview) {
+        setReviews(prevReviews => [...prevReviews, newReview])
+        setIsAddingReview(false)
     }
 
     if (!book) return <div>Loading...</div>
     const { title, subtitle, authors, publishedDate, description, pageCount, categories, thumbnail, language, listPrice } = book
-    const { amount, currencyCode, isOnSale } = listPrice
+    const { amount, isOnSale } = listPrice
 
     const pageCountInfo = getPageCountInfo(pageCount)
     const dateCategory = getDateCategory(publishedDate)
@@ -116,7 +132,7 @@ export function BookDetails() {
             </button>
 
             <h4>Reveiws: </h4>
-            {book.reviews && book.reviews.map((rev) => (
+            {reviews && reviews.map((rev) => (
                 <section key={rev.id}>
                     <section>
                         <h5>Full name: </h5>
@@ -133,7 +149,7 @@ export function BookDetails() {
                     <button onClick={() => onRemoveReview(rev.id)}>Delete 🗑️</button>
                 </section>
             ))}
-            {isAddingReview && <AddReview bookId={book.id} onAddReview={loadBook} />}
+            {isAddingReview && <AddReview bookId={book.id} onAddReview={onAddReview} />}
 
             {isOnSale ? <span className="on-sale-badge">On Sale</span> : ''}
             <button onClick={onBack}>Back</button>

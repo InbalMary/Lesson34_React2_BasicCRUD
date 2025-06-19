@@ -12,10 +12,11 @@ export function AddReview({ bookId, onAddReview }) {
 
     function onSubmitAddReview(ev) {
         ev.preventDefault()
+        const reviewToAdd = { ...review }
         bookService.addReview(bookId, review)
             .then(() => {
                 setReview(bookService.getEmptyRev())
-                onAddReview()
+                onAddReview(reviewToAdd)
             })
             .catch(err => {
                 console.error('Failed to add review:', err)

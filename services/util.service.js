@@ -34,3 +34,7 @@ export function loadFromStorage(key) {
     const data = localStorage.getItem(key)
     return (data) ? JSON.parse(data) : undefined
 }
+
+export function formatDateForInput(date) {
+    return date.toISOString().split('T')[0]
+}

@@ -9,7 +9,7 @@ export function BookList({ books, onRemoveBook }) {
             {books.map(book => (
                 <li key={book.id}>
                     <BookPreview book={book} />
-                    <section>
+                    <section className="btns">
                         <button onClick={() => onRemoveBook(book.id)}>
                             Remove
                         </button>

@@ -7,7 +7,7 @@
     align-items: center;
     background-color: var(--clr1bg);
     border-radius: 12px;
-    margin: auto;
+    margin: 5vw;
 }
 
 .book-details>* {
@@ -59,3 +59,50 @@ dialog {
   margin: 0;
   line-height: 1.2;
 }
+
+.book-details .btns-rev {
+    margin: 0.5em auto;
+}
+
+.reviews-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: var(--clr2bg-light);
+    border-radius: 0.5em;
+    padding: 1.5em;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.reviews-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.review-card {
+    background: var(--gray1);
+    border-radius: 0.5em;
+    padding: 1.5em;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.review-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.add-review-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: var(--gray1);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 2px dashed var(--clr2bg);
+}
+

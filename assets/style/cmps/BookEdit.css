@@ -1,6 +1,6 @@
 .book-edit {
-    background-color: var(--clr1bg);
-    padding: 2rem;
+    /* background-color: var(--clr1bg); */
+    padding: 5vh;
     border-radius: 12px;
     margin: auto;
 }

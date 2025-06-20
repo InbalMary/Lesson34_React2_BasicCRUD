@@ -23,10 +23,10 @@ export function AddReview({ bookId, onAddReview }) {
             })
     }
 
-    const { fullName, rating, readAt } = review
+    const { fullName, rating, readAt, reviewText  } = review
     return (
     <section className="add-review">
-        <h1>Add Review</h1>
+        {/* <h1>Add Review</h1> */}
         <form onSubmit={onSubmitAddReview}>
             <label htmlFor="fullname">Full name: </label>
             <input required onChange={handleChange} value={fullName} type="text" name="fullName" id="fullname" />
@@ -45,6 +45,13 @@ export function AddReview({ bookId, onAddReview }) {
             <input type="date" id="readAt" name="readAt"
                 value={readAt} onChange={handleChange}
             />
+
+            <label htmlFor="reviewText">Your Review: </label>
+                <textarea id="reviewText" name="reviewText"
+                    value={reviewText || ''} onChange={handleChange}
+                    placeholder="Share your review here...)"
+                    rows="4"
+                />
 
             <button>Save</button>
         </form>

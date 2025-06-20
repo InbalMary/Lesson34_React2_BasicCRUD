@@ -194,7 +194,8 @@ function getEmptyRev() {
         id: makeId(),
         fullName: '',
         rating: 1,
-        readAt: utilService.formatDateForInput(new Date())
+        readAt: utilService.formatDateForInput(new Date()),
+        reviewText: ''
     }
 }
 

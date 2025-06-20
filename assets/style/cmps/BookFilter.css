@@ -1,7 +1,7 @@
 .book-filter {
     background-color: var(--clr2bg);
     padding-block: 1em;
-    text-align: center;
+    text-align: start;
 }
 
 .book-filter > h2 {
@@ -11,7 +11,7 @@
 .book-filter form {
     display: grid;
     grid-template-columns: 100px 200px;
-    place-self: center;
+    place-self: start;
     gap: .5em;
 }
 

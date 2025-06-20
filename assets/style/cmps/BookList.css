@@ -24,3 +24,10 @@
 .book-list .container p {
     margin-bottom: 0.2em;
 }
+
+.book-list .btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}

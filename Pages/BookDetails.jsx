@@ -127,32 +127,46 @@ export function BookDetails() {
                 <p>{isOnSale ? 'Yes' : 'No'}</p>
             </section>
 
-            <button onClick={onSetIsEditMode}>
-                {isAddingReview ? 'Cancel' : 'Add Review'}
-            </button>
+            <section className="reviews-section">
+                <h4>Reveiws: </h4>
+                {reviews && (
+                    <ol className="reviews-list">
+                        {reviews.map((rev) => (
+                            <li key={rev.id} className="review-card">
+                                <section>
+                                    <h5> Full name: </h5>
+                                    <p>{rev.fullName}</p>
+                                </section>
+                                <section>
+                                    <h5> Rating: </h5>
+                                    <p>{'⭐'.repeat(rev.rating)}</p>
+                                </section>
+                                <section>
+                                    <h5> Read At: </h5>
+                                    <p>{rev.readAt}</p>
+                                </section>
+                                <section>
+                                    <h5> Review Text: </h5>
+                                    <p>{rev.reviewText}</p>
+                                </section>
+                                <button onClick={() => onRemoveReview(rev.id)}>Delete 🗑️</button>
+                            </li>
+                        ))}
+                    </ol>
+                )}
 
-            <h4>Reveiws: </h4>
-            {reviews && reviews.map((rev) => (
-                <section key={rev.id}>
-                    <section>
-                        <h5>Full name: </h5>
-                        <p>{rev.fullName}</p>
+                {isAddingReview && (
+                    <section className="add-review-box">
+                        <AddReview bookId={book.id} onAddReview={onAddReview} />
                     </section>
-                    <section>
-                        <h5>Rating: </h5>
-                        <p>{'⭐'.repeat(rev.rating)}</p>
-                    </section>
-                    <section>
-                        <h5>Read At: </h5>
-                        <p>{rev.readAt}</p>
-                    </section>
-                    <button onClick={() => onRemoveReview(rev.id)}>Delete 🗑️</button>
-                </section>
-            ))}
-            {isAddingReview && <AddReview bookId={book.id} onAddReview={onAddReview} />}
+                )}
 
+                <button className="btns-rev" onClick={onSetIsEditMode}>
+                    {isAddingReview ? 'Cancel' : 'Add Review'}
+                </button>
+            </section>
             {isOnSale ? <span className="on-sale-badge">On Sale</span> : ''}
-            <button onClick={onBack}>Back</button>
+            <button className="btns-rev" onClick={onBack}>Back</button>
             <section>
                 <button ><Link to={`/book/${book.prevBookId}`}>Prev Book</Link></button>
                 <button ><Link to={`/book/${book.nextBookId}`}>Next Book</Link></button>

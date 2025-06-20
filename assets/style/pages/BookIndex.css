@@ -1,3 +1,18 @@
-.book-index {
-    
+.book-index {}
+
+.btn-container {
+    display: flex;
+    gap: 1.5em;
+    justify-content: start;
+    flex-wrap: wrap;
+    margin: 5vw;
+
+}
+
+.btn {
+    background-color: var(--clr2bg);
+    cursor: pointer;
+    border: 1px solid var(--clr2);
+    padding: 0.5em 0.8em;
+    border-radius: 4px;
 }

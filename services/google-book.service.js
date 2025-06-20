@@ -6,6 +6,7 @@ let gGoogleBooksMap = utilService.loadFromStorage(GOOGLE_BOOKS_KEY) || {}
 
 export const googleBookService = {
     query,
+    debounce
 }
 
 function query(keyword) {
@@ -47,6 +48,19 @@ function _getBookInfo(book) {
     }
 }
 
+
+export function debounce(func, wait = 300) {
+  let timeout
+
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout)
+      func(...args)
+    }
+    clearTimeout(timeout)
+    timeout = setTimeout(later, wait)
+  }
+}
 
 	// id: '',
     //     title,

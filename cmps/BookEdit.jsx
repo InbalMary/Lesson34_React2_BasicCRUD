@@ -80,11 +80,16 @@ export function BookEdit() {
         bookService.save(fullBook)
             .then((savedBook) => {
                 showSuccessMsg(`Book Saved (id: ${savedBook.id})`)
-                navigate('/book')})
+                navigate('/book')
+            })
             .catch(err => {
                 console.log('Cannot save book:', err)
                 showErrorMsg('Cannot save book')
             })
+    }
+
+    function onCanceled() {
+        navigate('/book')
     }
 
     if (!bookToEdit) return <div>Loading...</div>
@@ -140,7 +145,7 @@ export function BookEdit() {
                 />
                 <div>
                     <button type="submit">Save</button>
-                    {/* <button type="button" onClick={onCanceled}>Cancel</button> */}
+                    <button type="button" onClick={onCanceled}>Cancel</button>
                 </div>
             </form>
         </section>

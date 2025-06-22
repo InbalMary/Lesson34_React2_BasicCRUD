@@ -73,21 +73,21 @@ function remove(bookId) {
 }
 
 function save(book) {
-    if (!book.id) return storageService.post(BOOK_KEY, book)
+    // if (!book.id) return storageService.post(BOOK_KEY, book)
 
-    return get(book.id)
-        .then(() => {
-            return storageService.put(BOOK_KEY, book)
-        })
-        .catch(() => {
-            return storageService.post(BOOK_KEY, book)
-        })
+    // return get(book.id)
+    //     .then(() => {
+    //         return storageService.put(BOOK_KEY, book)
+    //     })
+    //     .catch(() => {
+    //         return storageService.post(BOOK_KEY, book)
+    //     })
 
-    // if (book.id) {
-    //     return storageService.put(BOOK_KEY, book)
-    // } else {
-    //     return storageService.post(BOOK_KEY, book)
-    // }
+    if (book.id) {
+        return storageService.put(BOOK_KEY, book)
+    } else {
+        return storageService.post(BOOK_KEY, book)
+    }
 }
 
 function getEmptyBook(title = '', amount = 0) {

@@ -4,7 +4,7 @@ export function Home() {
     return (
         <section className="home container">
             <h1 >Welcome to Miss Books shop!</h1>
-            <img src="/hero-img/reading.png" alt="hero-image" />
+            <img src="./hero-img/reading.png" alt="hero" />
         </section>
     )
 }

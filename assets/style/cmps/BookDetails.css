@@ -106,3 +106,8 @@ dialog {
     border: 2px dashed var(--clr2bg);
 }
 
+form {
+    display: grid;
+    gap: 0.5rem;
+
+}

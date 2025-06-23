@@ -14,7 +14,8 @@ export const bookService = {
     addReview,
     getEmptyRev,
     removeReview,
-    addGoogleBook
+    addGoogleBook,
+    getCategories
 }
 
 function query(filterBy = {}) {
@@ -167,6 +168,12 @@ function _createBooks() {
 //     return book
 // }
 
+function getCategories() {
+    return query().then(books =>
+        [...new Set(books.flatMap(book => book.categories))]
+
+    )
+}
 
 function _setNextPrevBookId(book) {
     return query().then((books) => {

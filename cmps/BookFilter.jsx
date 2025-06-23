@@ -1,3 +1,5 @@
+import { bookService } from "../services/book.service.js"
+
 const { useState, useEffect } = React
 
 export function BookFilter({ defaultFilter, onSetFilter }) {
@@ -8,6 +10,18 @@ export function BookFilter({ defaultFilter, onSetFilter }) {
         console.log('filterByToEdit', filterByToEdit)
         onSetFilter(filterByToEdit)
     }, [filterByToEdit])
+
+    const [categories, setCategories] = useState(null)
+    useEffect(() => {
+        loadCategories()
+    }, [])
+
+    function loadCategories() {
+        bookService.getCategories().then(categories => {
+            // console.log(categories);
+            setCategories(categories)
+        })
+    }
 
     function handleChange({ target }) {
         const field = target.name
@@ -42,7 +56,7 @@ export function BookFilter({ defaultFilter, onSetFilter }) {
         }
     }
 
-    const { title, authors, categories, listPrice } = filterByToEdit
+    const { title, authors, listPrice } = filterByToEdit
     const { amount, isOnSale } = listPrice
 
     return (
@@ -69,16 +83,14 @@ export function BookFilter({ defaultFilter, onSetFilter }) {
                 <label htmlFor="categories">Categories</label>
                 <select
                     onChange={handleChange}
-                    value={Array.isArray(categories) ? categories[0] || '' : categories || ''}
+                    defaultValue=""
                     name="categories"
                     id="categories"
                 >
                     <option value="">Select Category</option>
-                    <option value="Love">Love</option>
-                    <option value="Fiction">Fiction</option>
-                    <option value="Poetry">Poetry</option>
-                    <option value="Computers">Computers</option>
-                    <option value="Religion">Religion</option>
+                    {categories && categories.map(category =>
+                        <option key={category} value={category}>{category}</option>
+                    )}
                 </select>
                 <label htmlFor="amount">Max Price</label>
                 <input

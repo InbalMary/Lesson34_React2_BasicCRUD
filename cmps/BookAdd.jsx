@@ -11,17 +11,17 @@ export function BookAdd() {
     const [books, setBooks] = useState([])
     const debouncedSearchTermRef = useRef()
     const navigate = useNavigate()
-    
+
     useEffect(() => {
         debouncedSearchTermRef.current = googleBookService.debounce(getTermSearch, 1500)
     }, [])
 
-    useEffect(() => {
-        console.log('searchTerm changed- inside useeffecr ', searchTerm)
-        if (debouncedSearchTermRef.current) {
-            debouncedSearchTermRef.current(searchTerm)
-        }
-    }, [searchTerm])
+    // useEffect(() => {
+    //     console.log('searchTerm changed- inside useeffecr ', searchTerm)
+    //     if (debouncedSearchTermRef.current) {
+    //         debouncedSearchTermRef.current(searchTerm)
+    //     }
+    // }, [searchTerm])
 
     useEffect(() => {
         console.log('books', books)
@@ -81,7 +81,11 @@ export function BookAdd() {
                 <input
                     type="text" name="text" placeholder="Search for a book"
                     value={searchTerm}
-                    onChange={(ev) => setSearchTerm(ev.target.value)}
+                    onChange={(ev) => {
+                        const value = ev.target.value
+                        setSearchTerm(value)
+                        debouncedSearchTermRef.current(value)
+                    }}
                 />
                 <button>Search</button>
             </form>

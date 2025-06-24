@@ -187,18 +187,19 @@ function _setNextPrevBookId(book) {
 }
 
 function addReview(bookId, review) {
+    review.id = makeId()
     return get(bookId)
         .then(book => {
             if (!Array.isArray(book.reviews)) book.reviews = []
 
-            book.reviews.push(review)
+            book.reviews.unshift(review)
             return save(book)
         })
 }
 
 function getEmptyRev() {
     return {
-        id: makeId(),
+        // id: makeId(), //move to addrev
         fullName: '',
         rating: 1,
         readAt: utilService.formatDateForInput(new Date()),

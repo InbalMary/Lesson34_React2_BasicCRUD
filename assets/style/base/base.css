@@ -13,6 +13,7 @@ body {
             var(--clr2) 40%,
             var(--clr1bg-light) 70%,
             var(--clr2) 100%);
+    min-height: 100vh;
 
 }
 

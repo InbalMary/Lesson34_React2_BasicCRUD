@@ -1,4 +1,5 @@
 import { bookService } from "../services/book.service.js"
+import { ReviewList } from "../cmps/ReviewList.jsx"
 import { LongTxt } from "../cmps/LongTxt.jsx"
 import { AddReview } from "../cmps/AddReview.jsx"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
@@ -31,11 +32,6 @@ export function BookDetails() {
             })
     }
 
-    useEffect(() => {
-
-    }, [reviews])
-
-
     function getPageCountInfo(pageCount) {
         if (pageCount > 500) return 'Serious Reading'
         if (pageCount > 200) return ' Descent Reading'
@@ -62,12 +58,12 @@ export function BookDetails() {
         setIsAddingReview(prev => !prev)
     }
 
-    function onRemoveReview(revId) {
-        bookService.removeReview(book.id, revId)
+    function onRemoveReview(reviewId) {
+        bookService.removeReview(book.id, reviewId)
             .then(() => {
                 showSuccessMsg('Review removed succssefuly')
                 // loadBook() // TODO: update reviews (setReviews)
-                setReviews(prevReviews => prevReviews.filter(rev => rev.id !== revId))
+                setReviews(prevReviews => prevReviews.filter(rev => rev.id !== reviewId))
             })
             .catch(err => {
                 console.error('Failed to remove review:', err)
@@ -76,7 +72,7 @@ export function BookDetails() {
     }
 
     function onAddReview(newReview) {
-        setReviews(prevReviews => [...prevReviews, newReview])
+        setReviews(prevReviews => [newReview, ...prevReviews])
         setIsAddingReview(false)
     }
 
@@ -129,31 +125,9 @@ export function BookDetails() {
 
             <section className="reviews-section">
                 <h4>Reveiws: </h4>
-                {reviews && (
-                    <ol className="reviews-list">
-                        {reviews.map((rev) => (
-                            <li key={rev.id} className="review-card">
-                                <section>
-                                    <h5> Full name: </h5>
-                                    <p>{rev.fullName}</p>
-                                </section>
-                                <section>
-                                    <h5> Rating: </h5>
-                                    <p>{'⭐'.repeat(rev.rating)}</p>
-                                </section>
-                                <section>
-                                    <h5> Read At: </h5>
-                                    <p>{rev.readAt}</p>
-                                </section>
-                                <section>
-                                    <h5> Review Text: </h5>
-                                    <p>{rev.reviewText}</p>
-                                </section>
-                                <button onClick={() => onRemoveReview(rev.id)}>Delete 🗑️</button>
-                            </li>
-                        ))}
-                    </ol>
-                )}
+                {reviews.length === 0 && (<p>No reviews yet</p>)}
+                {reviews && <ReviewList reviews={reviews} onRemoveReview={onRemoveReview} />
+                }
 
                 {isAddingReview && (
                     <section className="add-review-box">

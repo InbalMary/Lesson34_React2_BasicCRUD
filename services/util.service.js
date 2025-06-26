@@ -53,3 +53,13 @@ export function animateCSS(el, animation = 'bounce') {
         el.addEventListener('animationend', handleAnimationEnd, { once: true })
     })
 }
+
+export function debounce(func, delay) {
+    let timeoutId
+    return (...args) => {
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => {
+            func(...args)
+        }, delay)
+    }
+}

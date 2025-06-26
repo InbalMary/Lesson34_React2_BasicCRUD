@@ -1,14 +1,16 @@
 import { bookService } from "../services/book.service.js"
+import { debounce } from "../services/util.service.js"
 
-const { useState, useEffect } = React
+const { useState, useEffect, useRef } = React
 
 export function BookFilter({ defaultFilter, onSetFilter }) {
 
     const [filterByToEdit, setFilterByToEdit] = useState({ ...defaultFilter })
+    const onSetFilterByDebounce = useRef(debounce(onSetFilter, 500)).current
 
     useEffect(() => {
-        console.log('filterByToEdit', filterByToEdit)
-        onSetFilter(filterByToEdit)
+        // console.log('filterByToEdit', filterByToEdit)
+        onSetFilterByDebounce(filterByToEdit)
     }, [filterByToEdit])
 
     const [categories, setCategories] = useState(null)

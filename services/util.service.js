@@ -63,3 +63,14 @@ export function debounce(func, delay) {
         }, delay)
     }
 }
+
+export function getTruthyValues(obj) {
+    const newObj = {}
+    for (const key in obj) {
+        const value = obj[key]
+        if (typeof value === 'boolean' || value) {
+            newObj[key] = value
+        }
+    }
+    return newObj
+}

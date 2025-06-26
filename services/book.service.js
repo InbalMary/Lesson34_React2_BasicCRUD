@@ -15,7 +15,8 @@ export const bookService = {
     getEmptyRev,
     removeReview,
     addGoogleBook,
-    getCategories
+    getCategories,
+    getFilterFromSearchParams
 }
 
 function query(filterBy = {}) {
@@ -127,6 +128,24 @@ function getDefaultFilter() {
             currencyCode: '',
             isOnSale: null
         }
+    }
+}
+
+function getFilterFromSearchParams(searchParams) {
+    return {
+        title: searchParams.get('title') || '',
+        subtitle: searchParams.get('subtitle') || '',
+        authors: searchParams.get('authors') ? searchParams.get('authors').split(',') : [],
+        publishedDate: searchParams.get('publishedDate') || null,
+        description: searchParams.get('description') || '',
+        pageCount: +searchParams.get('pageCount') || 0,
+        categories: searchParams.get('categories') ? searchParams.get('categories').split(',') : [],
+        thumbnail: searchParams.get('thumbnail') || '',
+        language: searchParams.get('language') || '',
+        amount: +searchParams.get('amount') || 0,
+        currencyCode: searchParams.get('currencyCode') || '',
+        isOnSale: searchParams.get('isOnSale') === 'true' ? true : 
+                  searchParams.get('isOnSale') === 'false' ? false : null
     }
 }
 

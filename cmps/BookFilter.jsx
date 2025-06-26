@@ -41,25 +41,14 @@ export function BookFilter({ defaultFilter, onSetFilter }) {
                 value = target.value.trim()
                 break
         }
-        if (field === 'amount' || field === 'isOnSale') {
-            if (field === 'isOnSale') {
-                if (value === 'all') value = null
-                else value = (value === 'true')
-            }
-            setFilterByToEdit(prevFilter => ({
-                ...prevFilter,
-                listPrice: {
-                    ...prevFilter.listPrice,
-                    [field]: value
-                }
-            }))
-        } else {
-            setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
+        if (field === 'isOnSale') {
+            if (value === 'all') value = null
+            else value = (value === 'true')
         }
+        setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
     }
 
-    const { title, authors, listPrice } = filterByToEdit
-    const { amount, isOnSale } = listPrice
+    const { title, authors, amount, isOnSale } = filterByToEdit
 
     return (
         <section className="book-filter container">

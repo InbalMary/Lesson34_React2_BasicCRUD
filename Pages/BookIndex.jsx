@@ -40,7 +40,7 @@ export function BookIndex() {
         setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
     }
 
-    if (!books) return <div className="container">Loading...</div>
+    if (!books) return <div className="loader">Loading...</div>
 
     return (
         <section className="book-index">

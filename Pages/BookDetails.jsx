@@ -10,7 +10,8 @@ const { useState, useEffect } = React
 export function BookDetails() {
 
     const [book, setBook] = useState(null)
-    const [reviews, setReviews] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
+    // const [reviews, setReviews] = useState(null)
     const params = useParams()
     const navigate = useNavigate()
     // TODO: reviews inside state
@@ -22,14 +23,16 @@ export function BookDetails() {
     }, [params.bookId])
 
     function loadBook() {
+        setIsLoading(true)
         bookService.get(params.bookId)
             .then(book => {
                 setBook(book)
-                setReviews(book.reviews || [])
+                // setReviews(book.reviews || [])
             })
             .catch(err => {
                 console.log('err:', err)
             })
+            .finally(() => setIsLoading(false))
     }
 
     function getPageCountInfo(pageCount) {
@@ -60,10 +63,11 @@ export function BookDetails() {
 
     function onRemoveReview(reviewId) {
         bookService.removeReview(book.id, reviewId)
-            .then(() => {
+            .then((updatedBook) => {
                 showSuccessMsg('Review removed succssefuly')
+                setBook(updatedBook)
                 // loadBook() // TODO: update reviews (setReviews)
-                setReviews(prevReviews => prevReviews.filter(rev => rev.id !== reviewId))
+                // setReviews(prevReviews => prevReviews.filter(rev => rev.id !== reviewId))
             })
             .catch(err => {
                 console.error('Failed to remove review:', err)
@@ -72,11 +76,15 @@ export function BookDetails() {
     }
 
     function onAddReview(newReview) {
-        setReviews(prevReviews => [newReview, ...prevReviews])
+        // setReviews(prevReviews => [newReview, ...prevReviews])
+        setBook(book => ({
+            ...book,
+            reviews: [newReview, ...(book.reviews || [])]
+        }))
         setIsAddingReview(false)
     }
 
-    if (!book) return <div>Loading...</div>
+    if (isLoading) return <div className="loader">Loading...</div>
     const { title, subtitle, authors, publishedDate, description, pageCount, categories, thumbnail, language, listPrice } = book
     const { amount, isOnSale } = listPrice
 
@@ -125,8 +133,8 @@ export function BookDetails() {
 
             <section className="reviews-section">
                 <h4>Reveiws: </h4>
-                {reviews.length === 0 && (<p>No reviews yet</p>)}
-                {reviews && <ReviewList reviews={reviews} onRemoveReview={onRemoveReview} />
+                {!book.reviews && (<p>No reviews yet</p>)}
+                {book.reviews && <ReviewList reviews={book.reviews} onRemoveReview={onRemoveReview} />
                 }
 
                 {isAddingReview && (

@@ -55,3 +55,28 @@
 .fa.fa-behance::before {
     content: "\f1b4";
 }
+
+.loader {
+    font-size: 3rem;
+    position: fixed;
+    inset: 0;
+    width: max-content;
+    height: max-content;
+    margin: auto;
+    animation: loader 1s infinite linear
+}
+
+
+@keyframes loader {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

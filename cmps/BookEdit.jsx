@@ -92,7 +92,7 @@ export function BookEdit() {
         navigate('/book')
     }
 
-    if (!bookToEdit) return <div>Loading...</div>
+    if (!bookToEdit) return <div className="loader">Loading...</div>
 
     const { title, authors = '', categories = '', listPrice = {} } = bookToEdit
     const { amount = '' } = listPrice
